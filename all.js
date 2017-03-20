@@ -16,51 +16,60 @@ function el(str) {
 	return document.getElementById(str);
 }
 
+function readAllOpts() {
+	var opts = {
+		tableVersion: el("tableversion").value.replace(/[\\\/]/g, ""),
+		libVersion: el("liblouisversion").value,
+		tables: el("tables").value,
+		forward: el("forward").checked,
+		input: el("input").value,
+		opcodes: el("opcodes").value,
+		testname: el("testcasename").value
+	}
+
+	if(/^[0-9]\.[0-9]\.[0-9]$/.test(opts.tableVersion)) {
+		opts.tableVersion = "v" + opts.tableVersion;
+	}
+
+	return opts;
+}
+
 function runTranslation() {
 	el("log").value = "";
 
-	var tableVersion = el("tableversion").value.replace(/[\\\/]/g, "");
-
-	if(/^[0-9]\.[0-9]\.[0-9]$/.test(tableVersion)) {
-		tableVersion = "v" + tableVersion;
-	}
-
-	var libVersion = el("liblouisversion").value;
+	var opts = readAllOpts();
 
 	var newTableFolderLoc = "https://raw.githubusercontent.com/liblouis/liblouis/" +
-		tableVersion + "/tables/";
+		opts.tableVersion + "/tables/";
 
-	if(tableFolderLoc !== newTableFolderLoc || lastVersion !== libVersion) {
+	if(tableFolderLoc !== newTableFolderLoc || lastVersion !== opts.libVersion) {
 		console.debug("reloading liblouis");
 		if(worker) { worker.terminate(); }
 		worker = new Worker("worker.js");
 		worker.addEventListener("message", processMsg);
 		lastOpcodes = "";
-		lou("import", libVersion, noop);
+		lou("import", opts.libVersion, noop);
 		lou("folderurl", newTableFolderLoc, noop);
 		tableFolderLoc = newTableFolderLoc;
 	}
 
-	var tables = el("tables").value;
-	var forward = el("forward").checked;
-	var input = el("input").value;
 
-	var opcodes = el("opcodes").value;
-
-	if(lastOpcodes && lastOpcodes !== opcodes) {
+	if(lastOpcodes && lastOpcodes !== opts.opcodes) {
 		lou("free", {}, noop);
 	}
-	lastOpcodes = opcodes;
+	lastOpcodes = opts.opcodes;
 
-	if(opcodes.length > 0) {
-		lou("compileString", {tables: tables, opcodes: opcodes}, noop);
+	if(opts.opcodes.length > 0) {
+		lou("compileString", {tables: opts.tables, opcodes: opts.opcodes}, noop);
 	}
 
-	lou(forward ? "translate" : "backtranslate", {input: input, tables: tables}, displayOutput);
-	setLink({forward: forward, input: input, tableVersion: tableVersion, tables: tables, opcodes: opcodes, liblouisVersion: libVersion});
+	lou(opts.forward ? "translate" : "backtranslate", {input: opts.input, tables: opts.tables}, displayOutput);
+
+	setLink(opts);
 }
 
 function setLink(opts) {
+	if(!opts) { opts = readAllOpts(); }
 	window.location.hash = encodeURIComponent(JSON.stringify(opts));
 	el("share").value = window.location.href;
 }
@@ -86,12 +95,14 @@ function readLink() {
 	}
 
 	if(opts) {
-		el("tableversion").value = opts.tableVersion;
-		el("liblouisversion").value = opts.liblouisVersion === "310" ? "310" : "300";
-		el(opts.forward ? "forward" : "backward").checked = "checked";
-		el("input").value = opts.input;
-		el("opcodes").value = opts.opcodes;
-		el("tables").value = opts.tables;
+		if(opts.tableVersion) { el("tableversion").value = opts.tableVersion; }
+		if(opts.liblouisVersion) { el("liblouisversion").value = opts.liblouisVersion === "310" ? "310" : "300"; }
+		if(opts.forward) { el(opts.forward ? "forward" : "backward").checked = "checked"; }
+		if(opts.input) { el("input").value = opts.input; }
+		if(opts.opcodes) { el("opcodes").value = opts.opcodes; }
+		if(opts.tables) { el("tables").value = opts.tables; }
+		if(opts.testname) { el("testcasename").value = opts.testname; }
+
 		el("share").value = window.location.href;
 
 		runTranslation();
