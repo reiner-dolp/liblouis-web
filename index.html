@@ -41,10 +41,12 @@ fieldset legend {
 textarea {
 	width: 100%;
 	height: 10em;
+	z-index: 1;
 }
 
 input, button, select {
 	padding: .5em;
+	z-index: 1;
 }
 
 .note {
@@ -147,6 +149,7 @@ textarea.large {
 #header .buttons {
 	position: absolute;
 	right: .2em;
+	z-index: 2;
 }
 
 #header a {
@@ -177,16 +180,49 @@ textarea.large {
 	overflow: hidden;
 	position: relative;
 }
+
+.shortcuts *[accesskey], .shortcuts *[data-key] {
+	position: relative;
+}
+
+.shortcuts *[accesskey]::after, .shortcuts *[data-key]::after {
+	content: attr(accesskey);
+	background-color: #f4f7f8;
+	border-radius: 3px;
+	border: 1px solid #b4b4b4;
+	box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset;
+	display: inline-block;
+	font-family: Consolas,"Liberation Mono",Courier,monospace;
+	font-size: .85em;
+	font-weight: 700;
+	line-height: inherit;
+	padding: 2px 4px;
+	display: block;
+	position: absolute;
+	color: #333;
+	top: 2px;
+	left: 2px;
+	z-index: 999;
+}
+
+.shortcuts *[data-key]::after {
+	content: attr(data-key);
+}
+
+#header .deemphasize {
+	background: #CCC;
+}
 </style>
 
 <div id=error class=hidden>
 </div>
 
 <div id=header>
-	<input type=text id=testcasename value="Nameless Liblouis Test">
+	<span data-key="n"></span><input accesskey="n" type=text id=testcasename value="Nameless Liblouis Test">
 	<div class=buttons>
-		<a href="https://reiner-dolp.github.io/liblouis-online/">+ New Test Case</a>
-		<a href="#" onclick="setLink();event.preventDefault();">Create Link</a>
+		<a accesskey="+" href="https://reiner-dolp.github.io/liblouis-online/">New Test Case</a>
+		<a accesskey="k" href="#" onclick="setLink();event.preventDefault();">Create Link</a>
+		<a accesskey="?" class=deemphasize href="#" onclick="document.body.classList.toggle('shortcuts');event.preventDefault();">Shortcuts</a>
 	</div>
 </div>
 
@@ -195,10 +231,10 @@ textarea.large {
 <fieldset class=left>
 	<legend>Version</legend>
 	<p class=note>You may enter a git commit hash, a liblouis version tag or a branch name.</p>
-	<label class=short><span>Version of the table folder</span> <input type="text" name="tableversion" id="tableversion" accesskey="v" value="master"></label>
+	<label class=short><span data-key="v">Version of the table folder</span> <input type="text" name="tableversion" id="tableversion" accesskey="v" value="master"></label>
 
-	<label class=short><span>Version of liblouis library</span> 
-	<select id=liblouisversion name="liblouisversion">
+	<label class=short><span data-key="l">Version of liblouis library</span> 
+	<select id=liblouisversion accesskey="l" name="liblouisversion">
 	  <option value="310" selected>3.1.0 (2c849bc)</option> 
 	  <option value="300">3.0.0 (db2a361)</option>
 	</select></label>
@@ -206,28 +242,28 @@ textarea.large {
 
 <fieldset class=right>
 <legend>Tables</legend>
-	<label><span>Files</span><input class=long type=text id="tables" value="unicode.dis,en-ueb-g1.ctb" data-option=forward accesskey="t" checked></label>
-	<label><span>Additional Opcodes</span>
-		<textarea id=opcodes></textarea>
+	<label><span data-key="t">Files</span><input class=long type=text id="tables" value="unicode.dis,en-ueb-g1.ctb" data-option=forward accesskey="t" checked></label>
+	<label><span data-key="a">Additional Opcodes</span>
+		<textarea accesskey="a" id=opcodes></textarea>
 	</label>
 </fieldset>
 
 <fieldset class=left>
 <legend>Translation Direction</legend>
-	<label><input type=radio name=dir id="forward" value="backward" data-option=forward accesskey="f" checked> forward</label>
-	<label><input type=radio name=dir id="backward" value="forward" data-option=bacckward accesskey="b"> backward</label>
+	<label><input type=radio name=dir id="forward" value="backward" data-option=forward accesskey=">" checked> forward</label>
+	<label><input type=radio name=dir id="backward" value="forward" data-option=bacckward accesskey="<"> backward</label>
 </fieldset>
 </div>
 <div class=contain>
 <fieldset class=left>
-<legend>Input</legend>
+<legend data-key="i">Input</legend>
 	<textarea class=large id=input accesskey="i">Hello, Liblouis!</textarea>
 </fieldset>
 
 <fieldset class=right id=output>
 	<legend>Output</legend>
-	<label><span>Converted to UTF-8</span> <textarea class=large id=outpututf8 disabled></textarea></label>
-	<label><span>Log Output</span> <textarea id=log disabled></textarea></label>
+	<label><span data-key="o">Converted to UTF-8</span> <textarea accesskey="8" class=large id=outpututf8 disabled></textarea></label>
+	<label><span data-key="m">Log Messages</span> <textarea accesskey="m" id=log disabled></textarea></label>
 	<!--<label><span>raw UTF-16 output as hex dump</span> <textarea disabled></textarea></label>-->
 </fieldset>
 </div>
