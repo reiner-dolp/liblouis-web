@@ -98,6 +98,11 @@ input, button {
 	margin-top: 0;
 }
 
+textarea.large {
+	font-size: 2em;
+	height: 2.5em;
+}
+
 #footer label {
 	margin-top: 0;
 	position: absolute;
@@ -169,12 +174,12 @@ input, button {
 <div class=contain>
 <fieldset class=left>
 <legend>Input</legend>
-	<textarea id=input accesskey="i">Hello, Liblouis!</textarea>
+	<textarea class=large id=input accesskey="i">Hello, Liblouis!</textarea>
 </fieldset>
 
 <fieldset class=right id=output>
 	<legend>Output</legend>
-	<label><span>converted to UTF-8</span> <textarea id=outpututf8 disabled></textarea></label>
+	<label><span>converted to UTF-8</span> <textarea class=large id=outpututf8 disabled></textarea></label>
 	<label><span>log output</span> <textarea id=log disabled></textarea></label>
 	<!--<label><span>raw UTF-16 output as hex dump</span> <textarea disabled></textarea></label>-->
 </fieldset>
