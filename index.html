@@ -43,7 +43,7 @@ textarea {
 	height: 10em;
 }
 
-input, button {
+input, button, select {
 	padding: .5em;
 }
 
@@ -154,7 +154,12 @@ textarea.large {
 	<legend>Version</legend>
 	<p class=note>You may enter a git commit hash, a liblouis version tag or a branch name.</p>
 	<label class=short><span>Version of the table folder</span> <input type="text" name="tableversion" id="tableversion" accesskey="v" value="master"></label>
-	<label class=short><span>Version of liblouis library</span> <input type="text" name="tableversion" id="liblouisversion" disabled="disabled" value="Loading Liblouis..."></label>
+
+	<label class=short><span>Version of liblouis library</span> 
+	<select id=liblouisversion name="liblouisversion">
+	  <option value="310" selected>3.1.0 (2c849bc)</option> 
+	  <option value="300">3.0.0 (db2a361)</option>
+	</select></label>
 </fieldset>
 
 <fieldset class=right>

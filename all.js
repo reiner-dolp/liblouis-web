@@ -1,19 +1,10 @@
-var worker = new Worker("worker.js");
+var worker = null;
 
 var callId = 0;
 var cbs = {};
 var tableFolderLoc = null;
+var lastVersion = null;
 var lastOpcodes = "";
-
-
-function displayVersion() {
-	var el = document.getElementById("liblouisversion");
-	if(el) {
-		lou("version", {}, function(version) {
-			el.value = version;
-		});
-	}
-}
 
 function displayOutput(str) {
 	el("outpututf8").value = str;	
@@ -34,19 +25,18 @@ function runTranslation() {
 		tableVersion = "v" + tableVersion;
 	}
 
+	var libVersion = el("liblouisversion").value;
+
 	var newTableFolderLoc = "https://raw.githubusercontent.com/liblouis/liblouis/" +
 		tableVersion + "/tables/";
 
-	if(tableFolderLoc !== newTableFolderLoc) {
-	       	if(tableFolderLoc || lastOpcodes) {
-			// changing the folder url is not supported, reload liblouis-js
-			console.debug("reloading liblouis");
-			worker.terminate();
-			worker = new Worker("worker.js");
-			worker.addEventListener("message", processMsg);
-			lastOpcodes = "";
-		}
-
+	if(tableFolderLoc !== newTableFolderLoc || lastVersion !== libVersion) {
+		console.debug("reloading liblouis");
+		if(worker) { worker.terminate(); }
+		worker = new Worker("worker.js");
+		worker.addEventListener("message", processMsg);
+		lastOpcodes = "";
+		lou("import", libVersion, noop);
 		lou("folderurl", newTableFolderLoc, noop);
 		tableFolderLoc = newTableFolderLoc;
 	}
@@ -67,7 +57,7 @@ function runTranslation() {
 	}
 
 	lou(forward ? "translate" : "backtranslate", {input: input, tables: tables}, displayOutput);
-	setLink({forward: forward, input: input, tableVersion: tableVersion, tables: tables, opcodes: opcodes});
+	setLink({forward: forward, input: input, tableVersion: tableVersion, tables: tables, opcodes: opcodes, liblouisVersion: libVersion});
 }
 
 function setLink(opts) {
@@ -97,6 +87,7 @@ function readLink() {
 
 	if(opts) {
 		el("tableversion").value = opts.tableVersion;
+		el("liblouisversion").value = opts.liblouisVersion === "310" ? "310" : "300";
 		el(opts.forward ? "forward" : "backward").checked = "checked";
 		el("input").value = opts.input;
 		el("opcodes").value = opts.opcodes;
@@ -134,6 +125,4 @@ function processMsg(ev) {
 	delete cbs[msg.callId];
 }
 
-worker.addEventListener("message", processMsg);
-displayVersion();
 readLink();

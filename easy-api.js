@@ -201,7 +201,11 @@ function easyApiDefaultLogCallback(lvl_id, msg) {
 }
 
 if(!isNode) {
-	liblouis.setLiblouisBuild(Module);
+	if(typeof Module !== "undefined") {
+		liblouis.setLiblouisBuild(Module);
+	} else if(typeof liblouis_emscripten !== "undefined") {
+		liblouis.setLiblouisBuild(liblouis_emscripten);
+	}
 }
 
 }));

@@ -1,10 +1,15 @@
-importScripts("liblouis-no-tables.js");
-importScripts("easy-api.js");
-
-
-liblouis.setLogLevel(liblouis.LOG.ALL);
 
 var CMD = {
+	import: function(version) {
+		importScripts("liblouis-no-tables-v"+version.replace(/[^0-9]/g, "")+".js");
+		importScripts("easy-api.js");
+		liblouis.setLogLevel(liblouis.LOG.ALL);
+
+		liblouis.registerLogCallback(function(logLevel, msg){
+			self.postMessage({isLog: true, level: liblouis.LOG[logLevel], msg: msg});
+		});
+	},
+
 	version: function () {
 		return liblouis.version();
 	},
@@ -29,10 +34,6 @@ var CMD = {
 		liblouis.compileString(data.tables, data.opcodes);
 	}
 };
-
-liblouis.registerLogCallback(function(logLevel, msg){
-	self.postMessage({isLog: true, level: liblouis.LOG[logLevel], msg: msg});
-});
 
 self.onmessage = function (ev) {
 	var msg = ev.data;
