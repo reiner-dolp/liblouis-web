@@ -71,7 +71,7 @@ function runTranslation() {
 }
 
 function setLink(opts) {
-	window.location.hash = JSON.stringify(opts);
+	window.location.hash = encodeURIComponent(JSON.stringify(opts));
 	el("share").value = window.location.href;
 }
 
@@ -88,7 +88,7 @@ function readLink() {
 
 	if(hash && hash.length > 0) {
 		try {
-			opts = JSON.parse(hash);
+			opts = JSON.parse(decodeURIComponent(hash));
 		} catch(e) {
 			error("Shared link is damaged or incomplete.");
 			return;
