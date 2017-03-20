@@ -24,16 +24,6 @@ label, fieldset, button, .box {
 	margin-top: 1em;
 }
 
-#run {
-	display: block;
-	text-transform: uppercase;
-	font-size: 1.5em;
-	color: #FFF;
-	background: orange;
-	font-weight: bold;
-	border: 0;
-}
-
 fieldset legend {
 	font-weight: bold;
 }
@@ -98,6 +88,9 @@ input, button, select {
 	font-weight: bold;
 	border: 0;
 	margin-top: 0;
+	display: block;
+	z-index: 2;
+	cursor: pointer;
 }
 
 textarea.large {
@@ -272,7 +265,7 @@ textarea.large {
 <div id=footer>
 <button id=run accesskey="r" onclick="runTranslation()">Run</button>
 
-<label><span>Shareable Link</span> <input id=share type=text></label>
+<label data-key="s"><span>Shareable Link</span> <input accesskey="s" onclick="this.setSelectionRange(0, this.value.length)" id=share type=text></label>
 </div>
 
 <script src="all.js"></script>
