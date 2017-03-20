@@ -1,8 +1,14 @@
 <!doctype html>
 
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700" rel="stylesheet">
 <style>
 html, body {
+	font-family: "Roboto";
 	background: #EEE;
+}
+
+body {
+	margin-bottom: 5em;
 }
 
 textarea, input {
@@ -18,8 +24,14 @@ label, fieldset, button, .box {
 	margin-top: 1em;
 }
 
-button {
+#run {
 	display: block;
+	text-transform: uppercase;
+	font-size: 1.5em;
+	color: #FFF;
+	background: orange;
+	font-weight: bold;
+	border: 0;
 }
 
 fieldset legend {
@@ -45,11 +57,6 @@ input, button {
 	width: 100%;
 }
 
-#share {
-	font-weight: bold;
-	width: 100%;
-}
-
 .short {
 	float: left;
 	padding-right: 2em;
@@ -64,6 +71,56 @@ input, button {
 	color: red;
 	font-weight: bold;
 	padding: 1em;
+}
+
+#footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 4em;
+	border-top: 1px solid #CCC;
+	box-shadow: 0 0 .3em #AAA;
+}
+
+#footer button {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 5em;
+	text-transform: uppercase;
+	font-size: 1.5em;
+	color: #FFF;
+	background: orange;
+	font-weight: bold;
+	border: 0;
+	margin-top: 0;
+}
+
+#footer label {
+	margin-top: 0;
+	position: absolute;
+	left: 0;
+	right: 7.5em;
+	bottom: 0;
+	top: 0;
+}
+
+#share {
+	margin-top: 0;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 100%;
+	font-weight: bold;
+	border: 0;
+}
+
+#footer label span {
+	display: none;
 }
 
 @media(min-width: 47em) {
@@ -124,9 +181,9 @@ input, button {
 </div>
 </div>
 
-<button class=long accesskey="r" onclick="runTranslation()">Run</button>
+<div id=footer>
+<button id=run accesskey="r" onclick="runTranslation()">Run</button>
 
-<div class=box>
 <label><span>Shareable Link</span> <input id=share type=text></label>
 </div>
 
