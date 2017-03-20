@@ -1,5 +1,5 @@
-importScripts("node_modules/liblouis-js/liblouis-no-tables.js");
-importScripts("node_modules/liblouis-js/easy-api.js");
+importScripts("liblouis-no-tables.js");
+importScripts("easy-api.js");
 
 
 liblouis.setLogLevel(liblouis.LOG.ALL);

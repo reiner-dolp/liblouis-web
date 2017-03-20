@@ -9,6 +9,5 @@
 		"url": "git://github.com/reiner-dolp/liblouis-online.git"
 	},
 	"dependencies": {
-		"liblouis-js": "git+https://git@github.com/reiner-dolp/liblouis-js.git"
 	}
 }

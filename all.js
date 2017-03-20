@@ -86,11 +86,13 @@ function readLink() {
 		window.location.hash;
 	var opts;
 
-	try {
-		opts = JSON.parse(hash);
-	} catch(e) {
-		error("Shared link is damaged or incomplete.");
-		return;
+	if(hash && hash.length > 0) {
+		try {
+			opts = JSON.parse(hash);
+		} catch(e) {
+			error("Shared link is damaged or incomplete.");
+			return;
+		}
 	}
 
 	if(opts) {
