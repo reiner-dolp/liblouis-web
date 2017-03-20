@@ -1,0 +1,133 @@
+<!doctype html>
+
+<style>
+html, body {
+	background: #EEE;
+}
+
+textarea, input {
+	box-sizing: border-box;
+}
+
+label span, input[type=text] {
+	display: block;
+}
+
+label, fieldset, button, .box {
+	overflow: hidden;
+	margin-top: 1em;
+}
+
+button {
+	display: block;
+}
+
+fieldset legend {
+	font-weight: bold;
+}
+
+textarea {
+	width: 100%;
+	height: 10em;
+}
+
+input, button {
+	padding: .5em;
+}
+
+.note {
+	font-size: .8em;
+	float: right;
+	width: 10em;
+}
+
+.long {
+	width: 100%;
+}
+
+#share {
+	font-weight: bold;
+	width: 100%;
+}
+
+.short {
+	float: left;
+	padding-right: 2em;
+}
+
+.hidden {
+	display: none;
+}
+
+#error {
+	border: 2px solid red;
+	color: red;
+	font-weight: bold;
+	padding: 1em;
+}
+
+@media(min-width: 47em) {
+	.contain {
+		overflow: hidden;
+	}
+	.right {
+		width: 49%;
+		float: right;
+		box-sizing: border-box;
+	}
+	.left {
+		width: 49%;
+		float: left;
+		box-sizing: border-box;
+	}
+}
+</style>
+
+<div id=error class=hidden>
+</div>
+
+<div class=contain>
+<div class=contain>
+<fieldset class=left>
+	<legend>Version</legend>
+	<p class=note>You may enter a git commit hash, a liblouis version tag or a branch name.</p>
+	<label class=short><span>Version of the table folder</span> <input type="text" name="tableversion" id="tableversion" accesskey="v" value="master"></label>
+	<label class=short><span>Version of liblouis library</span> <input type="text" name="tableversion" id="liblouisversion" disabled="disabled" value="Loading Liblouis..."></label>
+</fieldset>
+
+<fieldset class=right>
+<legend>Tables</legend>
+	<label><span>Files</span><input class=long type=text id="tables" value="unicode.dis,en-ueb-g1.ctb" data-option=forward accesskey="t" checked></label>
+	<label><span>Additional Opcodes</span>
+		<textarea id=opcodes></textarea>
+	</label>
+</fieldset>
+
+<fieldset class=left>
+<legend>Translation Direction</legend>
+	<label><input type=radio name=dir id="forward" value="backward" data-option=forward accesskey="f" checked> forward</label>
+	<label><input type=radio name=dir id="backward" value="forward" data-option=bacckward accesskey="b"> backward</label>
+</fieldset>
+</div>
+<div class=contain>
+<fieldset class=left>
+<legend>Input</legend>
+	<textarea id=input accesskey="i">Hello, Liblouis!</textarea>
+</fieldset>
+
+<fieldset class=right id=output>
+	<legend>Output</legend>
+	<label><span>converted to UTF-8</span> <textarea id=outpututf8 disabled></textarea></label>
+	<label><span>log output</span> <textarea id=log disabled></textarea></label>
+	<!--<label><span>raw UTF-16 output as hex dump</span> <textarea disabled></textarea></label>-->
+</fieldset>
+</div>
+</div>
+
+<button class=long accesskey="r" onclick="runTranslation()">Run</button>
+
+<div class=box>
+<label><span>Shareable Link</span> <input id=share type=text></label>
+</div>
+
+<script src="all.js"></script>

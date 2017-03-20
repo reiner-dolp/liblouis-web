@@ -1,0 +1,14 @@
+{
+	"name": "liblouis-online",
+	"description": "simple test drive for liblouis",
+	"author": "Reiner Dolp",
+	"keywords": [ "braille", "transcription", "test", "bug", "report", "liblouis"],
+	"version": "0.0.0",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/reiner-dolp/liblouis-online.git"
+	},
+	"dependencies": {
+		"liblouis-js": "git+https://git@github.com/reiner-dolp/liblouis-js.git"
+	}
+}
