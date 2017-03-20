@@ -144,6 +144,11 @@ textarea.large {
 	}
 }
 
+#header .buttons {
+	position: absolute;
+	right: .2em;
+}
+
 #header a {
 	text-transform: uppercase;
 	font-size: 1em;
@@ -156,7 +161,7 @@ textarea.large {
 	display: block;
 	float: left;
 	margin-top: 1.1em;
-	margin-right: 1em;
+	margin-left: 1em;
 }
 
 #testcasename {
@@ -164,10 +169,13 @@ textarea.large {
 	font-size: 2em;
 	border: 0;
 	float: left;
+	box-sizing: border-box;
+	width: 100%;
 }
 
 #header {
 	overflow: hidden;
+	position: relative;
 }
 </style>
 
@@ -176,8 +184,10 @@ textarea.large {
 
 <div id=header>
 	<input type=text id=testcasename value="Nameless Liblouis Test">
-	<a href="https://reiner-dolp.github.io/liblouis-online/">+ New Test Case</a>
-	<a href="#" onclick="setLink();event.preventDefault();">Create Link</a>
+	<div class=buttons>
+		<a href="https://reiner-dolp.github.io/liblouis-online/">+ New Test Case</a>
+		<a href="#" onclick="setLink();event.preventDefault();">Create Link</a>
+	</div>
 </div>
 
 <div class=contain>
@@ -216,8 +226,8 @@ textarea.large {
 
 <fieldset class=right id=output>
 	<legend>Output</legend>
-	<label><span>converted to UTF-8</span> <textarea class=large id=outpututf8 disabled></textarea></label>
-	<label><span>log output</span> <textarea id=log disabled></textarea></label>
+	<label><span>Converted to UTF-8</span> <textarea class=large id=outpututf8 disabled></textarea></label>
+	<label><span>Log Output</span> <textarea id=log disabled></textarea></label>
 	<!--<label><span>raw UTF-16 output as hex dump</span> <textarea disabled></textarea></label>-->
 </fieldset>
 </div>
