@@ -1,5 +1,5 @@
 {
-	"name": "liblouis-online",
+	"name": "liblouis-web",
 	"description": "simple test drive for liblouis",
 	"author": "Reiner Dolp",
 	"keywords": [ "braille", "transcription", "test", "bug", "report", "liblouis"],

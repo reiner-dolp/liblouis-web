@@ -25,7 +25,7 @@ function readAllOpts() {
 		input: el("input").value,
 		opcodes: el("opcodes").value,
 		testname: el("testcasename").value
-	};
+	}
 
 	if(/^[0-9]\.[0-9]\.[0-9]$/.test(opts.tableVersion)) {
 		opts.tableVersion = "v" + opts.tableVersion;
