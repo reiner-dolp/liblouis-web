@@ -29,9 +29,12 @@
 
 	<label class=short><span data-key="l">Version of liblouis library</span> 
 	<select id=liblouisversion accesskey="l" name="liblouisversion">
-	  <option value="310" selected>3.1.0 (2c849bc)</option> 
-	  <option value="300">3.0.0 (db2a361)</option>
 	</select></label>
+
+	<div class=clear>
+	<label><input type=radio name=bitness id="utf16" value="16" accesskey="6" checked> UTF-16</label>
+	<label><input type=radio name=bitness id="utf32" value="32" accesskey="3"> UTF-32</label>
+	</div>
 </fieldset>
 
 <fieldset class=right>
@@ -45,7 +48,7 @@
 <fieldset class=left>
 <legend>Translation Direction</legend>
 	<label><input type=radio name=dir id="forward" value="backward" data-option=forward accesskey=">" checked> forward</label>
-	<label><input type=radio name=dir id="backward" value="forward" data-option=bacckward accesskey="<"> backward</label>
+	<label><input type=radio name=dir id="backward" value="forward" data-option=backward accesskey="<"> backward</label>
 </fieldset>
 </div>
 <div class=contain>
@@ -69,4 +72,5 @@
 <label data-key="s"><span>Shareable Link</span> <input accesskey="s" onclick="this.setSelectionRange(0, this.value.length)" id=share type=text></label>
 </div>
 
+<script src="release.js"></script>
 <script src="main.js"></script>

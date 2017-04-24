@@ -1,8 +1,8 @@
 
 var CMD = {
-	import: function(version) {
-		importScripts("liblouis-no-tables-v"+version.replace(/[^0-9]/g, "")+".js");
-		importScripts("easy-api.js");
+	import: function(data) {
+		importScripts("https://raw.githubusercontent.com/liblouis/js-build/"+toHashOrVersion(data.version) +"/build-no-tables-utf"+ (data.bitness === 32 ? 32 : 16) +".js");
+		importScripts("node_modules/liblouis/easy-api.js");
 		liblouis.setLogLevel(liblouis.LOG.ALL);
 
 		liblouis.registerLogCallback(function(logLevel, msg){
@@ -47,3 +47,11 @@ self.onmessage = function (ev) {
 		data: res
 	});
 };
+
+function toHashOrVersion(str) {
+	if(/^v?[0-9]\.[0-9]\.[0-9]$/.test(str)) {
+		return str[0] === "v" ? str : "v" + str;
+	} else {
+		return "v0.0.0-" + str.replace(/[^0-9a-zA-Z]/g, "").substr(0, 6);
+	}
+}

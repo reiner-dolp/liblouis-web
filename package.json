@@ -9,6 +9,7 @@
 		"url": "git://github.com/reiner-dolp/liblouis-online.git"
 	},
 	"dependencies": {
-		"braille-pattern-fonts": "git+https://git@github.com/braillescanner/braille-pattern-fonts.git"
+		"braille-pattern-fonts": "git+https://git@github.com/braillescanner/braille-pattern-fonts.git",
+		"liblouis-js": "git+https://git@github.com/liblouis/liblouis-js.git"
 	}
 }

@@ -20,12 +20,13 @@ function readAllOpts() {
 	var opts = {
 		tableVersion: el("tableversion").value.replace(/[\\\/]/g, ""),
 		libVersion: el("liblouisversion").value,
+		utf16: el("utf16").checked,
 		tables: el("tables").value,
 		forward: el("forward").checked,
 		input: el("input").value,
 		opcodes: el("opcodes").value,
 		testname: el("testcasename").value
-	}
+	};
 
 	if(/^[0-9]\.[0-9]\.[0-9]$/.test(opts.tableVersion)) {
 		opts.tableVersion = "v" + opts.tableVersion;
@@ -48,7 +49,7 @@ function runTranslation() {
 		worker = new Worker("worker.js");
 		worker.addEventListener("message", processMsg);
 		lastOpcodes = "";
-		lou("import", opts.libVersion, noop);
+		lou("import", {version: opts.libVersion, bitness: opts.utf16 ? 16 : 32}, noop);
 		lou("folderurl", newTableFolderLoc, noop);
 		tableFolderLoc = newTableFolderLoc;
 	}
@@ -80,6 +81,25 @@ function error(msg) {
 	err.classList.remove("hidden");	
 }
 
+function addLiblouisVersions(after) {
+	getReleaseList(function(list) {
+		var select = el("liblouisversion");
+		for(var i = 0; i < list.length; ++i) {
+			var name = list[i].name;
+			if(name.indexOf("v0.0.0-test") !== 0) {
+				var opt = document.createElement('option');
+				var stripped = name.replace("v0.0.0-", "");
+				opt.value = stripped;
+				opt.textContent = stripped;
+				select.appendChild(opt);
+			}
+		}
+		after();
+	}, function() {
+		error("Failed to load liblouis releases. May have hit github API limit.");
+	});
+}
+
 function readLink() {
 	var hash = window.location.hash[0] === "#" ? window.location.hash.slice(1) :
 		window.location.hash;
@@ -96,8 +116,9 @@ function readLink() {
 
 	if(opts) {
 		if(opts.tableVersion) { el("tableversion").value = opts.tableVersion; }
-		if(opts.liblouisVersion) { el("liblouisversion").value = opts.liblouisVersion === "310" ? "310" : "300"; }
-		if(opts.forward) { el(opts.forward ? "forward" : "backward").checked = "checked"; }
+		if(opts.liblouisVersion) { el("liblouisversion").value = ops.liblouisVersion; }
+		if(opts.hasOwnProperty("forward")) { el(opts.forward ? "forward" : "backward").checked = "checked"; }
+		if(opts.hasOwnProperty("utf16")) { el(opts.utf16 ? "utf16" : "utf32").checked = "checked"; }
 		if(opts.input) { el("input").value = opts.input; }
 		if(opts.opcodes) { el("opcodes").value = opts.opcodes; }
 		if(opts.tables) { el("tables").value = opts.tables; }
@@ -136,4 +157,4 @@ function processMsg(ev) {
 	delete cbs[msg.callId];
 }
 
-readLink();
+addLiblouisVersions(readLink);

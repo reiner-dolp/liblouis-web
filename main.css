@@ -10,6 +10,10 @@ body {
 	margin-bottom: 5em;
 }
 
+.clear {
+	clear: both;
+}
+
 textarea, input {
 	box-sizing: border-box;
 }
@@ -119,6 +123,7 @@ textarea.large {
 }
 
 @media(min-width: 47em) {
+
 	.contain {
 		overflow: hidden;
 	}
