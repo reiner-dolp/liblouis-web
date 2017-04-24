@@ -1,6 +1,9 @@
 html, body {
-	font-family: "Roboto";
 	background: #EEE;
+}
+
+body, textarea, input {
+	font-family: "braillepatterns", "Roboto";
 }
 
 body {
