@@ -1,8 +1,8 @@
 
 var CMD = {
 	import: function(data) {
-		importScripts("https://raw.githubusercontent.com/liblouis/js-build/"+toHashOrVersion(data.version) +"/build-no-tables-utf"+ (data.bitness === 32 ? 32 : 16) +".js");
-		importScripts("node_modules/liblouis/easy-api.js");
+		importScripts("https://rawgit.com/liblouis/js-build/"+toHashOrVersion(data.version) +"/build-no-tables-utf"+ (data.bitness === 32 ? 32 : 16) +".js");
+		importScripts("modules/liblouis/easy-api.js");
 		liblouis.setLogLevel(liblouis.LOG.ALL);
 
 		liblouis.registerLogCallback(function(logLevel, msg){
